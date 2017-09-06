@@ -10,6 +10,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,12 +22,12 @@ import android.view.WindowManager;
  * Created by xyb on 2017/9/5.
  */
 
-public class BaseNiceDialog extends DialogFragment {
+public abstract class BaseNiceDialog extends DialogFragment {
 
     private int mGravity = Gravity.CENTER;//对话框的位置
     private boolean mCanceledOnTouchOutside = true;//是否触摸外部关闭
     private boolean mCanceledBack = true;//是否返回键关闭
-    private float mWidth = 0.9f;//对话框宽度，范围：0-1；1整屏宽
+    private float mWidth = 0.75f;//对话框宽度，范围：0-1；1整屏宽
     private int[] mPadding;//对话框与屏幕边缘距离
     private int mAnimStyle;//显示动画
     private boolean isDimEnabled = true;
@@ -38,19 +39,15 @@ public class BaseNiceDialog extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Log.d("tttttt","onCreate");
+
         setStyle(DialogFragment.STYLE_NO_TITLE,0);
-    }
-
-
-    @Override
-    public void onStart() {
         Dialog dialog = getDialog();
         if(dialog != null){
             dialog.setCanceledOnTouchOutside(mCanceledOnTouchOutside);
             dialog.setCancelable(mCanceledBack);
             setDialogGravity(dialog);
         }
-        super.onStart();
     }
 
     private void setDialogGravity(Dialog dialog) {
@@ -60,7 +57,7 @@ public class BaseNiceDialog extends DialogFragment {
         WindowManager.LayoutParams wlp = window.getAttributes();
         DisplayMetrics dm = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);//获取屏幕宽
-        wlp.width = dm.widthPixels;//宽度按屏幕大小的百分比设置
+        wlp.width = (int) (dm.widthPixels * mWidth);//宽度按屏幕大小的百分比设置
         wlp.gravity = mGravity;
         wlp.x = mX;
         wlp.y = mY;

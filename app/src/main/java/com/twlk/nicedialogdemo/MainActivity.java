@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.twlk.nicedialog.BottomDialog;
+import com.twlk.nicedialog.NiceDialog;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +27,24 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(String item, int position) {
                         Toast.makeText(MainActivity.this,item,Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+        findViewById(R.id.btn_confirm_dialog).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NiceDialog dialog = new NiceDialog();
+                dialog.setContent("的都是发顺丰").show(getSupportFragmentManager(),"dialgo");
+                dialog.setOnBtnClickListener(new NiceDialog.OnBtnClickListener() {
+                    @Override
+                    public void confirmClick() {
+                        Toast.makeText(MainActivity.this,"确定",Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void cancelClick() {
+                        Toast.makeText(MainActivity.this,"取消",Toast.LENGTH_SHORT).show();
                     }
                 });
             }
