@@ -102,6 +102,7 @@ public class NiceDialog extends BaseNiceDialog implements DialogInterface {
     }
 
 
+
     public NiceDialog setConfirmTextColor(final int confirmTextColor) {
         handler.postDelayed(new Runnable() {
             @Override
